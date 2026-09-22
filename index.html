@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKBzns - Next-Gen Digital Marketing & Business Intelligence</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rev: {
+                            ice: '#EEF2F5',       /* Base light background (Originally bottom color) */
+                            icelight: '#F4F7F9',  /* Soft white-gray surface tone */
+                            surface: '#FFFFFF',   /* Clean pure white card surface */
+                            orange: '#FF7A32',    /* Vibrant Orange Accent */
+                            orangehover: '#F86624',/* Orange Hover State */
+                            slate: '#223843',     /* Deep Slate Blue / Navy */
+                            charcoal: '#0B0D0E'   /* Pure Black / Dark Charcoal (Originally top color) */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --color-ice: #EEF2F5;
+            --color-icelight: #F4F7F9;
+            --color-surface: #FFFFFF;
+            --color-orange: #FF7A32;
+            --color-orangehover: #F86624;
+            --color-slate: #223843;
+            --color-charcoal: #0B0D0E;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-ice);
+            color: var(--color-charcoal);
+            overflow-x: hidden;
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 28s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-ice);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-slate);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-orange);
+        }
+
+        /* Glassmorphism Light Styling */
+        .glass-header {
+            background: rgba(238, 242, 245, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(34, 56, 67, 0.12);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(34, 56, 67, 0.1);
+        }
+
+        /* Scroll Animation Utility */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-rev-ice text-rev-charcoal antialiased">
+
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1.5 bg-rev-orange z-50 transition-all duration-75 w-0"></div>
+
+    <!-- Sticky Header Navigation -->
+    <header class="fixed top-0 left-0 w-full z-40 glass-header transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-rev-orange flex items-center justify-center font-extrabold text-xl text-rev-surface shadow-md shadow-rev-orange/20 group-hover:scale-105 transition-transform">
+                    OK
+                </div>
+                <span class="text-2xl font-black tracking-tight text-rev-charcoal">OKBzns<span class="text-rev-orange">.</span></span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-bold text-rev-slate">
+                <a href="#services" class="hover:text-rev-orange transition-colors">Services</a>
+                <a href="#why-us" class="hover:text-rev-orange transition-colors">Why OKBzns</a>
+                <a href="#case-studies" class="hover:text-rev-orange transition-colors">Results</a>
+                <a href="#process" class="hover:text-rev-orange transition-colors">Process</a>
+                <a href="#testimonials" class="hover:text-rev-orange transition-colors">Reviews</a>
+                <a href="#team" class="hover:text-rev-orange transition-colors">Team</a>
+            </nav>
+
+            <!-- CTA Header Button -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="#contact" class="px-6 py-2.5 rounded-xl bg-rev-orange hover:bg-rev-orangehover text-rev-surface font-extrabold text-sm shadow-md shadow-rev-orange/25 transition-all hover:scale-105">
+                    Get Free Audit
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <div class="flex items-center md:hidden">
+                <button id="mobile-menu-btn" aria-label="Open Navigation Menu" class="p-2.5 rounded-xl bg-rev-slate text-rev-surface focus:outline-none">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Full-Screen Overlay Navigation -->
+        <div id="mobile-drawer" class="hidden md:hidden fixed inset-x-0 top-20 bg-rev-ice border-b border-rev-slate/20 px-6 py-8 shadow-2xl space-y-5">
+            <a href="#services" class="mobile-nav-link block text-lg font-bold text-rev-slate hover:text-rev-orange">Services</a>
+            <a href="#why-us" class="mobile-nav-link block text-lg font-bold text-rev-slate hover:text-rev-orange">Why OKBzns</a>
+            <a href="#case-studies" class="mobile-nav-link block text-lg font-bold text-rev-slate hover:text-rev-orange">Results & Case Studies</a>
+            <a href="#process" class="mobile-nav-link block text-lg font-bold text-rev-slate hover:text-rev-orange">How We Work</a>
+            <a href="#testimonials" class="mobile-nav-link block text-lg font-bold text-rev-slate hover:text-rev-orange">Testimonials</a>
+            <a href="#team" class="mobile-nav-link block text-lg font-bold text-rev-slate hover:text-rev-orange">Our Team</a>
+            <a href="#contact" class="mobile-nav-link block w-full text-center py-3.5 rounded-xl bg-rev-orange text-rev-surface font-black text-base shadow-lg shadow-rev-orange/20">
+                Get Free Marketing Audit
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section (Light reversed background with dark slate typography) -->
+    <section class="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden bg-gradient-to-b from-rev-ice via-rev-icelight to-rev-ice">
+        <!-- Interactive Canvas Particles tuned for light background -->
+        <canvas id="hero-canvas" class="absolute inset-0 w-full h-full opacity-60 pointer-events-none"></canvas>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
+            <!-- Badge -->
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-rev-surface border border-rev-slate/15 shadow-sm mb-8">
+                <span class="w-2.5 h-2.5 rounded-full bg-rev-orange animate-pulse"></span>
+                <span class="text-xs sm:text-sm font-bold tracking-wide text-rev-slate uppercase">Data-Driven Growth Agency</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-rev-charcoal leading-tight max-w-5xl mx-auto mb-8">
+                Grow Your Business with <span class="text-rev-orange underline decoration-rev-orange/30 underline-offset-8">Data-Driven</span> Marketing
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="text-lg sm:text-2xl text-rev-slate font-medium max-w-3xl mx-auto mb-10 leading-relaxed">
+                We turn clicks into customers and visitors into revenue. Performance-focused campaigns tailored for modern enterprises.
+            </p>
+
+            <!-- Hero CTAs -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-rev-orange hover:bg-rev-orangehover text-rev-surface font-extrabold text-base shadow-lg shadow-rev-orange/30 transition-all hover:scale-105">
+                    Get Free Marketing Audit <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#case-studies" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-rev-surface hover:bg-rev-icelight text-rev-slate font-extrabold text-base border-2 border-rev-slate/20 shadow-sm transition-all hover:scale-105">
+                    See Our Work
+                </a>
+            </div>
+
+            <!-- Trust Badge Stat Counters -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 shadow-xl shadow-rev-slate/5">
+                <div class="text-center p-2">
+                    <div class="text-3xl sm:text-4xl font-black text-rev-orange counter" data-target="500">0</div>
+                    <div class="text-xs sm:text-sm text-rev-slate font-bold mt-1 uppercase tracking-wider">Clients Served</div>
+                </div>
+                <div class="text-center p-2 border-t sm:border-t-0 sm:border-l border-rev-slate/10">
+                    <div class="text-3xl sm:text-4xl font-black text-rev-slate counter" data-target="10">0</div>
+                    <div class="text-xs sm:text-sm text-rev-slate font-bold mt-1 uppercase tracking-wider">Years Experience</div>
+                </div>
+                <div class="text-center p-2 border-t sm:border-t-0 sm:border-l border-rev-slate/10">
+                    <div class="text-3xl sm:text-4xl font-black text-rev-orange counter" data-target="50">0</div>
+                    <div class="text-xs sm:text-sm text-rev-slate font-bold mt-1 uppercase tracking-wider">$M+ Revenue Generated</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Logos Section -->
+    <section class="py-12 bg-rev-surface border-y border-rev-slate/10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 mb-6 text-center">
+            <p class="text-xs font-black uppercase tracking-widest text-rev-slate/60">Trusted by Growing Brands Worldwide</p>
+        </div>
+        <div class="relative w-full overflow-hidden">
+            <div class="animate-marquee flex items-center space-x-12 opacity-80 transition-all">
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-bolt text-rev-orange"></i><span>NEXUS CORP</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-cube text-rev-orange"></i><span>BLOCKSCALE</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-layer-group text-rev-orange"></i><span>STACKFLOW</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-chart-line text-rev-orange"></i><span>QUANTUM DIGITAL</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-globe text-rev-orange"></i><span>GLOBALEDGE</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-shield-halved text-rev-orange"></i><span>SECURENET</span></span>
+
+                <!-- Duplicate for Marquee Seamless Loop -->
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-bolt text-rev-orange"></i><span>NEXUS CORP</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-cube text-rev-orange"></i><span>BLOCKSCALE</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-layer-group text-rev-orange"></i><span>STACKFLOW</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-chart-line text-rev-orange"></i><span>QUANTUM DIGITAL</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-globe text-rev-orange"></i><span>GLOBALEDGE</span></span>
+                <span class="text-xl sm:text-2xl font-black text-rev-slate flex items-center space-x-2"><i class="fas fa-shield-halved text-rev-orange"></i><span>SECURENET</span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-rev-ice relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+                <h2 class="text-xs font-black uppercase tracking-widest text-rev-orange mb-3">Services</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-rev-charcoal tracking-tight">What We Do Best</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="p-8 rounded-2xl bg-rev-surface border border-rev-slate/15 hover:border-rev-orange/60 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 fade-in-up">
+                    <div class="w-14 h-14 rounded-2xl bg-rev-icelight text-rev-orange flex items-center justify-center text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-magnifying-glass-chart"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-3">SEO & Content Marketing</h3>
+                    <p class="text-rev-slate text-sm mb-6 leading-relaxed">Dominate organic search rankings and convert qualified web visitors with high-intent keyword strategies.</p>
+                    <button onclick="openModal('SEO & Content Strategy', 'Our SEO methodology combines technical website optimization, authority backlink creation, and audience-first content hubs to capture top position search engine keywords.')" class="text-rev-orange font-bold text-sm hover:underline flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="p-8 rounded-2xl bg-rev-surface border border-rev-slate/15 hover:border-rev-orange/60 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 fade-in-up">
+                    <div class="w-14 h-14 rounded-2xl bg-rev-icelight text-rev-orange flex items-center justify-center text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-rectangle-ad"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-3">Google & Facebook Ads</h3>
+                    <p class="text-rev-slate text-sm mb-6 leading-relaxed">Precision PPC acquisition campaigns optimized for lowest cost-per-acquisition (CPA) and maximum ROI.</p>
+                    <button onclick="openModal('Paid Advertising (PPC)', 'We engineer hyper-targeted Google Search, Shopping, Meta Ads, and LinkedIn campaign structures designed for immediate conversion and rapid scaling.')" class="text-rev-orange font-bold text-sm hover:underline flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="p-8 rounded-2xl bg-rev-surface border border-rev-slate/15 hover:border-rev-orange/60 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 fade-in-up">
+                    <div class="w-14 h-14 rounded-2xl bg-rev-icelight text-rev-orange flex items-center justify-center text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-3">Social Media Management</h3>
+                    <p class="text-rev-slate text-sm mb-6 leading-relaxed">Engage brand advocates with premium creative content, community building, and viral campaign tactics.</p>
+                    <button onclick="openModal('Social Media Growth', 'From video creation to active community management, we elevate your brand presence across LinkedIn, Instagram, X, and TikTok.')" class="text-rev-orange font-bold text-sm hover:underline flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="p-8 rounded-2xl bg-rev-surface border border-rev-slate/15 hover:border-rev-orange/60 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 fade-in-up">
+                    <div class="w-14 h-14 rounded-2xl bg-rev-icelight text-rev-orange flex items-center justify-center text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-3">Email Marketing & Automation</h3>
+                    <p class="text-rev-slate text-sm mb-6 leading-relaxed">Automated lifecycle flows, subscriber nurture sequences, and retention frameworks that drive repeat sales.</p>
+                    <button onclick="openModal('Email Automation', 'Implement custom automated abandoned cart flows, win-back series, and personalized user newsletters that maximize customer lifetime value (LTV).')" class="text-rev-orange font-bold text-sm hover:underline flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="p-8 rounded-2xl bg-rev-surface border border-rev-slate/15 hover:border-rev-orange/60 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 fade-in-up">
+                    <div class="w-14 h-14 rounded-2xl bg-rev-icelight text-rev-orange flex items-center justify-center text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-3">Web Design & Development</h3>
+                    <p class="text-rev-slate text-sm mb-6 leading-relaxed">High-converting landing pages and lightning-fast websites engineered specifically for user conversion.</p>
+                    <button onclick="openModal('Web Development', 'We build clean, mobile-first web applications and conversion funnel pages optimized for speed, accessibility, and high search performance.')" class="text-rev-orange font-bold text-sm hover:underline flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="p-8 rounded-2xl bg-rev-surface border border-rev-slate/15 hover:border-rev-orange/60 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 fade-in-up">
+                    <div class="w-14 h-14 rounded-2xl bg-rev-icelight text-rev-orange flex items-center justify-center text-2xl mb-6 shadow-inner">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-3">Analytics & Reporting</h3>
+                    <p class="text-rev-slate text-sm mb-6 leading-relaxed">Transparent real-time metrics dashboards providing total visibility into your marketing performance.</p>
+                    <button onclick="openModal('Analytics & Attribution', 'Say goodbye to vanity metrics. Get clear multi-touch attribution reporting and custom executive summary dashboards.')" class="text-rev-orange font-bold text-sm hover:underline flex items-center">
+                        Learn More <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Modal Pop-up -->
+    <div id="info-modal" class="fixed inset-0 bg-rev-charcoal/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-rev-surface border border-rev-slate/20 rounded-3xl max-w-lg w-full p-8 relative shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-rev-slate hover:text-rev-orange text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 id="modal-title" class="text-2xl font-black text-rev-slate mb-4">Service Details</h3>
+            <p id="modal-body" class="text-rev-slate text-sm leading-relaxed mb-6"></p>
+            <button onclick="closeModal()" class="w-full py-3.5 rounded-xl bg-rev-orange hover:bg-rev-orangehover text-rev-surface font-extrabold text-sm shadow-md">Close Modal</button>
+        </div>
+    </div>
+
+    <!-- Why OKBzns Section -->
+    <section id="why-us" class="py-24 bg-rev-icelight border-y border-rev-slate/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+                <h2 class="text-xs font-black uppercase tracking-widest text-rev-orange mb-3">Our Core Value</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-rev-charcoal tracking-tight">Why Choose OKBzns?</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 shadow-sm fade-in-up">
+                    <div class="w-10 h-10 rounded-full bg-rev-orange/15 text-rev-orange flex items-center justify-center mb-4 font-black">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-rev-charcoal mb-2">Results-Focused Strategy</h3>
+                    <p class="text-rev-slate text-sm leading-relaxed">We obsess over your return on investment (ROI) with measurable metrics.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 shadow-sm fade-in-up">
+                    <div class="w-10 h-10 rounded-full bg-rev-orange/15 text-rev-orange flex items-center justify-center mb-4 font-black">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-rev-charcoal mb-2">Transparent Reporting</h3>
+                    <p class="text-rev-slate text-sm leading-relaxed">Real-time custom dashboards with zero confusing jargon or hidden fees.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 shadow-sm fade-in-up">
+                    <div class="w-10 h-10 rounded-full bg-rev-orange/15 text-rev-orange flex items-center justify-center mb-4 font-black">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-rev-charcoal mb-2">Dedicated Account Manager</h3>
+                    <p class="text-rev-slate text-sm leading-relaxed">One direct point of contact, always available to assist your growth team.</p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 shadow-sm fade-in-up">
+                    <div class="w-10 h-10 rounded-full bg-rev-orange/15 text-rev-orange flex items-center justify-center mb-4 font-black">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-rev-charcoal mb-2">Industry Expertise</h3>
+                    <p class="text-rev-slate text-sm leading-relaxed">10+ years of battle-tested marketing across 20+ specialized industries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies / Results Section -->
+    <section id="case-studies" class="py-24 bg-rev-ice">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+                <h2 class="text-xs font-black uppercase tracking-widest text-rev-orange mb-3">Case Studies</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-rev-charcoal tracking-tight">Real Results for Real Businesses</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Case Study 1 -->
+                <div class="p-8 rounded-3xl bg-rev-surface border border-rev-slate/15 shadow-lg flex flex-col justify-between fade-in-up">
+                    <div>
+                        <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-rev-orange/15 text-rev-orange uppercase tracking-wider">E-Commerce Brand</span>
+                        <h3 class="text-2xl font-black text-rev-charcoal mt-4 mb-2">+340% Organic Traffic</h3>
+                        <p class="text-rev-slate text-sm mb-4"><strong>Challenge:</strong> Stagnant organic traffic & high customer acquisition costs.</p>
+                        <p class="text-rev-slate text-sm mb-6"><strong>Solution:</strong> Complete SEO restructuring & keyword cluster content engine.</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-rev-orange mb-4">+340% Traffic</div>
+                        <button onclick="openModal('E-Commerce Case Study', 'Through targeted search query optimization and technical page speed fixes, we scaled organic monthly visitors from 12,000 to over 52,000 in just six months.')" class="w-full py-3 rounded-xl bg-rev-slate hover:bg-rev-orange text-rev-surface font-extrabold text-sm transition-all shadow-md">
+                            View Full Case Study
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Case Study 2 -->
+                <div class="p-8 rounded-3xl bg-rev-surface border border-rev-slate/15 shadow-lg flex flex-col justify-between fade-in-up">
+                    <div>
+                        <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-rev-orange/15 text-rev-orange uppercase tracking-wider">SaaS Enterprise</span>
+                        <h3 class="text-2xl font-black text-rev-charcoal mt-4 mb-2">60% Reduced CAC</h3>
+                        <p class="text-rev-slate text-sm mb-4"><strong>Challenge:</strong> Unfocused Google Ads spend leading to poor qualified leads.</p>
+                        <p class="text-rev-slate text-sm mb-6"><strong>Solution:</strong> Targeted PPC retargeting & landing page optimization.</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-rev-orange mb-4">-60% CAC Reduction</div>
+                        <button onclick="openModal('SaaS PPC Case Study', 'By restructuring campaign match types and deploying conversion-focused landing pages, we slashed Cost Per Acquisition while increasing SQLs by 180%.')" class="w-full py-3 rounded-xl bg-rev-slate hover:bg-rev-orange text-rev-surface font-extrabold text-sm transition-all shadow-md">
+                            View Full Case Study
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Case Study 3 -->
+                <div class="p-8 rounded-3xl bg-rev-surface border border-rev-slate/15 shadow-lg flex flex-col justify-between fade-in-up">
+                    <div>
+                        <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-rev-orange/15 text-rev-orange uppercase tracking-wider">Local Business</span>
+                        <h3 class="text-2xl font-black text-rev-charcoal mt-4 mb-2">5x ROI in 90 Days</h3>
+                        <p class="text-rev-slate text-sm mb-4"><strong>Challenge:</strong> Low local market share and inconsistent lead volume.</p>
+                        <p class="text-rev-slate text-sm mb-6"><strong>Solution:</strong> Hyper-local Google Ads & review automation ecosystem.</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-rev-orange mb-4">5x Measured ROI</div>
+                        <button onclick="openModal('Local Business Case Study', 'Combining Google Local Service Ads with geo-fenced Social Media promotions generated 140+ qualified service quotes in under 90 days.')" class="w-full py-3 rounded-xl bg-rev-slate hover:bg-rev-orange text-rev-surface font-extrabold text-sm transition-all shadow-md">
+                            View Full Case Study
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-24 bg-rev-icelight border-t border-rev-slate/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-20 fade-in-up">
+                <h2 class="text-xs font-black uppercase tracking-widest text-rev-orange mb-3">Our Framework</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-rev-charcoal tracking-tight">How We Work</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                <!-- Step 1 -->
+                <div class="text-center fade-in-up">
+                    <div class="w-16 h-16 rounded-2xl bg-rev-orange text-rev-surface text-2xl font-black flex items-center justify-center mx-auto mb-6 shadow-lg shadow-rev-orange/30">
+                        01
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-2">Discovery & Audit</h3>
+                    <p class="text-rev-slate text-sm leading-relaxed">Deep dive technical analysis into your current funnel performance.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center fade-in-up">
+                    <div class="w-16 h-16 rounded-2xl bg-rev-slate text-rev-surface text-2xl font-black flex items-center justify-center mx-auto mb-6 shadow-lg shadow-rev-slate/20">
+                        02
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-2">Strategy Plan</h3>
+                    <p class="text-rev-slate text-sm leading-relaxed">Formulating custom multi-channel growth architecture and KPI roadmaps.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center fade-in-up">
+                    <div class="w-16 h-16 rounded-2xl bg-rev-slate text-rev-surface text-2xl font-black flex items-center justify-center mx-auto mb-6 shadow-lg shadow-rev-slate/20">
+                        03
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-2">Execution & Testing</h3>
+                    <p class="text-rev-slate text-sm leading-relaxed">Rapid campaign launch with continuous multi-variable optimization.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="text-center fade-in-up">
+                    <div class="w-16 h-16 rounded-2xl bg-rev-slate text-rev-surface text-2xl font-black flex items-center justify-center mx-auto mb-6 shadow-lg shadow-rev-slate/20">
+                        04
+                    </div>
+                    <h3 class="text-xl font-extrabold text-rev-charcoal mb-2">Reporting & Scale</h3>
+                    <p class="text-rev-slate text-sm leading-relaxed">Transparent real-time metrics feedback and channel expansion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-rev-ice">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-xs font-black uppercase tracking-widest text-rev-orange mb-3">Client Reviews</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-rev-charcoal tracking-tight">What Our Clients Say</p>
+            </div>
+
+            <!-- Rotating Testimonial Card Container -->
+            <div class="relative bg-rev-surface border border-rev-slate/15 rounded-3xl p-8 sm:p-12 shadow-xl fade-in-up">
+                <div id="testimonial-container" class="min-h-[170px] flex flex-col justify-center transition-all duration-300">
+                    <!-- Rating Stars -->
+                    <div class="flex text-rev-orange space-x-1 mb-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p id="testimonial-quote" class="text-lg sm:text-xl font-medium text-rev-charcoal italic mb-6 leading-relaxed">
+                        "OKBzns completely transformed our acquisition strategy. Our customer volume grew 3x within four months while keeping our ad spend balanced."
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <div id="testimonial-avatar" class="w-12 h-12 rounded-full bg-rev-slate text-rev-surface font-extrabold flex items-center justify-center text-base">
+                            AM
+                        </div>
+                        <div>
+                            <h4 id="testimonial-name" class="font-extrabold text-rev-charcoal">Alex Morgan</h4>
+                            <p id="testimonial-company" class="text-xs text-rev-slate font-bold">CMO, Vertex Solutions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Controls -->
+                <div class="flex justify-between items-center mt-8 pt-6 border-t border-rev-slate/10">
+                    <div class="flex space-x-2" id="testimonial-dots">
+                        <button onclick="setTestimonial(0)" class="w-3 h-3 rounded-full bg-rev-orange transition-all"></button>
+                        <button onclick="setTestimonial(1)" class="w-3 h-3 rounded-full bg-rev-slate/30 transition-all"></button>
+                        <button onclick="setTestimonial(2)" class="w-3 h-3 rounded-full bg-rev-slate/30 transition-all"></button>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button onclick="prevTestimonial()" class="p-3 rounded-xl bg-rev-icelight hover:bg-rev-orange hover:text-rev-surface text-rev-slate transition-colors"><i class="fas fa-arrow-left"></i></button>
+                        <button onclick="nextTestimonial()" class="p-3 rounded-xl bg-rev-icelight hover:bg-rev-orange hover:text-rev-surface text-rev-slate transition-colors"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team / About Section -->
+    <section id="team" class="py-24 bg-rev-icelight border-y border-rev-slate/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+                <h2 class="text-xs font-black uppercase tracking-widest text-rev-orange mb-3">Meet the Team</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-rev-charcoal tracking-tight">Marketing Experts Obsessed with Growth</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Member 1 -->
+                <div class="p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 text-center shadow-sm fade-in-up">
+                    <div class="w-20 h-20 rounded-2xl bg-rev-icelight border-2 border-rev-orange mx-auto mb-4 flex items-center justify-center text-3xl text-rev-slate">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-rev-charcoal">Himanshu Goel</h3>
+                    <p class="text-xs text-rev-orange font-extrabold uppercase mb-2">Founder & Growth Strategist</p>
+                    <p class="text-xs text-rev-slate mb-4">12+ years optimizing scale frameworks for top e-commerce brands.</p>
+                    <a href="#" class="text-rev-slate hover:text-rev-orange text-base"><i class="fab fa-linkedin"></i></a>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 text-center shadow-sm fade-in-up">
+                    <div class="w-20 h-20 rounded-2xl bg-rev-icelight border-2 border-rev-orange mx-auto mb-4 flex items-center justify-center text-3xl text-rev-slate">
+                        <i class="fas fa-user-gear"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-rev-charcoal">Dev Kumar</h3>
+                    <p class="text-xs text-rev-orange font-extrabold uppercase mb-2">Head of Paid Media</p>
+                    <p class="text-xs text-rev-slate mb-4">PPC Specialist who has managed over $30M in multi-channel ad spend.</p>
+                    <a href="#" class="text-rev-slate hover:text-rev-orange text-base"><i class="fab fa-linkedin"></i></a>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 text-center shadow-sm fade-in-up">
+                    <div class="w-20 h-20 rounded-2xl bg-rev-icelight border-2 border-rev-orange mx-auto mb-4 flex items-center justify-center text-3xl text-rev-slate">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-rev-charcoal">Adarsh Kumar Patel</h3>
+                    <p class="text-xs text-rev-orange font-extrabold uppercase mb-2">Lead SEO Architect</p>
+                    <p class="text-xs text-rev-slate mb-4">Technical search engine expert behind 100+ first-page Google rankings.</p>
+                    <a href="#" class="text-rev-slate hover:text-rev-orange text-base"><i class="fab fa-linkedin"></i></a>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="p-6 rounded-2xl bg-rev-surface border border-rev-slate/15 text-center shadow-sm fade-in-up">
+                    <div class="w-20 h-20 rounded-2xl bg-rev-icelight border-2 border-rev-orange mx-auto mb-4 flex items-center justify-center text-3xl text-rev-slate">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-rev-charcoal">Sachin Kumar</h3>
+                    <p class="text-xs text-rev-orange font-extrabold uppercase mb-2">Conversion Lead</p>
+                    <p class="text-xs text-rev-slate mb-4">UX designer focused on maximizing user landing page conversion rates.</p>
+                    <a href="#" class="text-rev-slate hover:text-rev-orange text-base"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / CTA Section (Vibrant Orange Background Accent) -->
+    <section id="contact" class="py-24 bg-rev-orange text-rev-surface relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Info Banner -->
+                <div class="fade-in-up">
+                    <h2 class="text-xs font-black uppercase tracking-widest text-rev-charcoal mb-3">Ready to Scale?</h2>
+                    <p class="text-4xl sm:text-5xl font-black text-rev-surface tracking-tight mb-6">Get Your Free Marketing Audit & Growth Plan</p>
+                    <p class="text-rev-surface/90 text-base mb-8 leading-relaxed font-medium">
+                        Discover untapped revenue opportunities in your current funnels. No commitment required—our strategy team responds within 24 hours.
+                    </p>
+
+                    <div class="space-y-4 text-sm font-bold text-rev-surface">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-rev-charcoal text-lg"></i>
+                            <span>+1 (800) 555-OKBZNS</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-rev-charcoal text-lg"></i>
+                            <span id="contact-email">audit@okbzns.com</span>
+                            <button onclick="copyEmail()" class="text-xs underline text-rev-charcoal ml-2">Copy Email</button>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-rev-charcoal text-lg"></i>
+                            <span>Mon-Fri, 9am - 6pm EST</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Form Box -->
+                <div class="bg-rev-surface border border-rev-slate/15 rounded-3xl p-8 shadow-2xl text-rev-charcoal fade-in-up">
+                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase text-rev-slate mb-1">Your Name *</label>
+                                <input type="text" required placeholder="John Doe" class="w-full px-4 py-3 rounded-xl bg-rev-icelight border border-rev-slate/20 text-sm font-medium focus:outline-none focus:border-rev-orange">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase text-rev-slate mb-1">Email Address *</label>
+                                <input type="email" required placeholder="john@company.com" class="w-full px-4 py-3 rounded-xl bg-rev-icelight border border-rev-slate/20 text-sm font-medium focus:outline-none focus:border-rev-orange">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase text-rev-slate mb-1">Company Name</label>
+                                <input type="text" placeholder="Brand Inc." class="w-full px-4 py-3 rounded-xl bg-rev-icelight border border-rev-slate/20 text-sm font-medium focus:outline-none focus:border-rev-orange">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase text-rev-slate mb-1">Website URL</label>
+                                <input type="url" placeholder="https://example.com" class="w-full px-4 py-3 rounded-xl bg-rev-icelight border border-rev-slate/20 text-sm font-medium focus:outline-none focus:border-rev-orange">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase text-rev-slate mb-1">Service Interest</label>
+                                <select class="w-full px-4 py-3 rounded-xl bg-rev-icelight border border-rev-slate/20 text-sm font-medium focus:outline-none focus:border-rev-orange">
+                                    <option>SEO & Content</option>
+                                    <option>PPC Advertising</option>
+                                    <option>Social Media</option>
+                                    <option>Full-Service Marketing</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold uppercase text-rev-slate mb-1">Monthly Budget</label>
+                                <select class="w-full px-4 py-3 rounded-xl bg-rev-icelight border border-rev-slate/20 text-sm font-medium focus:outline-none focus:border-rev-orange">
+                                    <option>&lt; $1,000</option>
+                                    <option>$1,000 - $5,000</option>
+                                    <option>$5,000 - $10,000</option>
+                                    <option>$10,000+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-extrabold uppercase text-rev-slate mb-1">Message</label>
+                            <textarea rows="3" placeholder="Tell us about your business goals..." class="w-full px-4 py-3 rounded-xl bg-rev-icelight border border-rev-slate/20 text-sm font-medium focus:outline-none focus:border-rev-orange"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-rev-slate hover:bg-rev-charcoal text-rev-surface font-extrabold text-base transition-all shadow-lg">
+                            Get My Free Audit
+                        </button>
+                    </form>
+
+                    <div id="form-success" class="hidden text-center py-8">
+                        <div class="w-16 h-16 rounded-full bg-rev-orange/20 text-rev-orange text-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-rev-charcoal mb-2">Audit Request Received!</h3>
+                        <p class="text-xs text-rev-slate">Our team is reviewing your site and will email your custom report shortly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section (Deep Slate Navy Grounding) -->
+    <footer class="bg-rev-charcoal text-rev-ice py-16 text-sm border-t border-rev-slate">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <a href="#" class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-rev-orange flex items-center justify-center font-black text-rev-surface">OK</div>
+                        <span class="text-xl font-black text-rev-surface">OKBzns<span class="text-rev-orange">.</span></span>
+                    </a>
+                    <p class="text-xs text-rev-ice/70 leading-relaxed mb-6">Marketing That Works. Results That Speak.</p>
+                    <div class="flex space-x-4 text-base text-rev-ice">
+                        <a href="#" class="hover:text-rev-orange"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="hover:text-rev-orange"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-rev-orange"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="hover:text-rev-orange"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-rev-surface mb-4 text-xs uppercase tracking-wider">Quick Links</h4>
+                    <ul class="space-y-2 text-xs text-rev-ice/80">
+                        <li><a href="#services" class="hover:text-rev-orange">Services</a></li>
+                        <li><a href="#case-studies" class="hover:text-rev-orange">Case Studies</a></li>
+                        <li><a href="#about" class="hover:text-rev-orange">About Us</a></li>
+                        <li><a href="#contact" class="hover:text-rev-orange">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-rev-surface mb-4 text-xs uppercase tracking-wider">Partner Badges</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 rounded bg-rev-slate text-[10px] font-bold text-rev-surface">GOOGLE PARTNER</span>
+                        <span class="px-2.5 py-1 rounded bg-rev-slate text-[10px] font-bold text-rev-surface">META BUSINESS</span>
+                        <span class="px-2.5 py-1 rounded bg-rev-slate text-[10px] font-bold text-rev-surface">HUBSPOT CERTIFIED</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-rev-surface mb-4 text-xs uppercase tracking-wider">Newsletter</h4>
+                    <p class="text-xs text-rev-ice/70 mb-3">Get marketing tips directly in your inbox.</p>
+                    <form onsubmit="handleNewsletter(event)" class="flex">
+                        <input type="email" required placeholder="email@company.com" class="px-3 py-2 rounded-l-lg bg-rev-slate text-xs text-rev-surface focus:outline-none w-full">
+                        <button type="submit" class="bg-rev-orange text-rev-surface px-4 rounded-r-lg font-bold text-xs hover:bg-rev-orangehover">Join</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-rev-slate/40 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-rev-ice/60">
+                <div>&copy; 2026 OKBzns. All rights reserved.</div>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-rev-orange">Privacy Policy</a>
+                    <a href="#" class="hover:text-rev-orange">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" onclick="scrollToTop()" aria-label="Back to Top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-rev-orange text-rev-surface shadow-xl flex items-center justify-center text-lg opacity-0 pointer-events-none transition-all z-30 hover:scale-110">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Exit Intent Modal -->
+    <div id="exit-modal" class="fixed inset-0 bg-rev-charcoal/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-rev-surface border border-rev-orange rounded-3xl max-w-md w-full p-8 relative shadow-2xl text-center">
+            <button onclick="closeExitModal()" class="absolute top-4 right-4 text-rev-slate hover:text-rev-orange text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="w-16 h-16 rounded-full bg-rev-orange/20 text-rev-orange text-3xl flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-gift"></i>
+            </div>
+            <h3 class="text-2xl font-black text-rev-charcoal mb-2">Wait! Before You Go...</h3>
+            <p class="text-xs text-rev-slate mb-6 leading-relaxed">Download our Free 2026 Marketing Strategy Checklist to audit your own channels.</p>
+            <a href="#contact" onclick="closeExitModal()" class="block w-full py-3.5 rounded-xl bg-rev-orange hover:bg-rev-orangehover text-rev-surface font-extrabold text-sm shadow-md">
+                Get Free Checklist
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Navigation Drawer Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileDrawer.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.classList.add('hidden');
+            });
+        });
+
+        // Scroll Progress Bar & Back-To-Top Button Trigger
+        const scrollProgress = document.getElementById('scroll-progress');
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const currentScroll = window.scrollY;
+            const scrollPercentage = (currentScroll / totalScroll) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                backToTopBtn.classList.add('opacity-100');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                backToTopBtn.classList.remove('opacity-100');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Intersection Observer for Animation & Counter Triggers
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => animateCounter(counter));
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+        function animateCounter(counter) {
+            if (counter.classList.contains('counted')) return;
+            counter.classList.add('counted');
+            
+            const target = parseInt(counter.getAttribute('data-target'));
+            let current = 0;
+            const step = Math.ceil(target / 35);
+            
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    counter.innerText = target;
+                    clearInterval(timer);
+                } else {
+                    counter.innerText = current;
+                }
+            }, 30);
+        }
+
+        // Service Modal Window Handlers
+        function openModal(title, description) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = description;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+
+        // Testimonial Carousel Data & Logic
+        const testimonials = [
+            {
+                quote: "OKBzns completely transformed our acquisition strategy. Our customer volume grew 3x within four months while keeping our ad spend balanced.",
+                name: "Alex Morgan",
+                company: "CMO, Vertex Solutions",
+                avatar: "AM"
+            },
+            {
+                quote: "Their team reduced our PPC CAC by 60% in less than 90 days. Their transparent dashboard keeps us informed every single week.",
+                name: "Sarah Jenkins",
+                company: "Founder, SaaS Flow",
+                avatar: "SJ"
+            },
+            {
+                quote: "The organic SEO strategy generated over 50,000 new monthly visits to our store. Hands down the best marketing investment we made.",
+                name: "Michael Chang",
+                company: "Director, Urban E-Com",
+                avatar: "MC"
+            }
+        ];
+
+        let currentTestimonial = 0;
+
+        function updateTestimonialUI() {
+            const t = testimonials[currentTestimonial];
+            document.getElementById('testimonial-quote').innerText = `"${t.quote}"`;
+            document.getElementById('testimonial-name').innerText = t.name;
+            document.getElementById('testimonial-company').innerText = t.company;
+            document.getElementById('testimonial-avatar').innerText = t.avatar;
+
+            const dots = document.getElementById('testimonial-dots').children;
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = i === currentTestimonial 
+                    ? "w-3 h-3 rounded-full bg-rev-orange transition-all" 
+                    : "w-3 h-3 rounded-full bg-rev-slate/30 transition-all";
+            }
+        }
+
+        function setTestimonial(idx) {
+            currentTestimonial = idx;
+            updateTestimonialUI();
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            updateTestimonialUI();
+        }
+
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            updateTestimonialUI();
+        }
+
+        setInterval(nextTestimonial, 6000);
+
+        // Copy Email to Clipboard
+        function copyEmail() {
+            const emailText = document.getElementById('contact-email').innerText;
+            const temp = document.createElement('input');
+            temp.value = emailText;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            alert('Email address copied to clipboard!');
+        }
+
+        // Form Submit Handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contact-form').classList.add('hidden');
+            document.getElementById('form-success').classList.remove('hidden');
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing to OKBzns marketing tips!');
+        }
+
+        // Exit Intent Modal
+        let exitShown = false;
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY < 10 && !exitShown) {
+                exitShown = true;
+                document.getElementById('exit-modal').classList.remove('hidden');
+            }
+        });
+
+        function closeExitModal() {
+            document.getElementById('exit-modal').classList.add('hidden');
+        }
+
+        // Interactive Particle Canvas (Tuned for reversed light background)
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let particles = [];
+        for (let i = 0; i < 40; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6
+            });
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#223843';
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(34, 56, 67, ${0.25 - dist / 480})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.onload = function() {
+            animateCanvas();
+        };
+    </script>
+</body>
+</html>
