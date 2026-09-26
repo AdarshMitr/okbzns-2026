@@ -645,7 +645,9 @@
         </div>
         <div>
             <label class="block text-xs font-extrabold uppercase text-slate-900 mb-1">Website URL</label>
-            <input type="url" id="form-website" placeholder="https://example.com" 
+            <input type="text" id="form-website" placeholder="example.com" 
+            pattern="^((?!https?:\/\/)(?!www\.)[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$"
+            title="Please enter a valid domain name without http://, https://, or www."
                    class="w-full px-4 py-3 bg-white text-gray-900 placeholder-gray-400 rounded-lg border-0 focus:ring-2 focus:ring-slate-800 focus:outline-none">
         </div>
     </div>
